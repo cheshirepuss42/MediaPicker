@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://Main.gd" type="Script" id=1]
+[ext_resource path="res://Main.cs" type="Script" id=1]
 
 [node name="Main" type="Control"]
 anchor_right = 1.0
@@ -19,6 +19,7 @@ __meta__ = {
 }
 
 [node name="Picker" type="Tabs" parent="Tabs"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -153,13 +154,13 @@ text = "
 Search collection"
 align = 1
 
-[node name="Bar" type="LineEdit" parent="Tabs/Picker/Sections/Search"]
+[node name="SearchBar" type="LineEdit" parent="Tabs/Picker/Sections/Search"]
 margin_top = 35.0
 margin_right = 292.0
 margin_bottom = 59.0
 size_flags_horizontal = 3
 
-[node name="Result" type="ItemList" parent="Tabs/Picker/Sections/Search"]
+[node name="SearchResult" type="ItemList" parent="Tabs/Picker/Sections/Search"]
 margin_top = 63.0
 margin_right = 292.0
 margin_bottom = 334.0
@@ -167,7 +168,6 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="Collections" type="Tabs" parent="Tabs"]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -186,7 +186,7 @@ __meta__ = {
 }
 
 [node name="Label" type="Label" parent="Tabs/Collections/Sections"]
-margin_right = 392.0
+margin_right = 292.0
 margin_bottom = 14.0
 text = "Current Collection"
 __meta__ = {
@@ -195,48 +195,48 @@ __meta__ = {
 
 [node name="CurrentCollection" type="HBoxContainer" parent="Tabs/Collections/Sections"]
 margin_top = 18.0
-margin_right = 392.0
-margin_bottom = 371.0
+margin_right = 292.0
+margin_bottom = 271.0
 size_flags_vertical = 3
 
 [node name="FoldersList" type="ItemList" parent="Tabs/Collections/Sections/CurrentCollection"]
-margin_right = 280.0
-margin_bottom = 353.0
+margin_right = 180.0
+margin_bottom = 253.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="Buttons" type="VBoxContainer" parent="Tabs/Collections/Sections/CurrentCollection"]
-margin_left = 284.0
-margin_right = 392.0
-margin_bottom = 353.0
+margin_left = 184.0
+margin_right = 292.0
+margin_bottom = 253.0
 
 [node name="AddFolderButton" type="Button" parent="Tabs/Collections/Sections/CurrentCollection/Buttons"]
 margin_right = 108.0
-margin_bottom = 115.0
+margin_bottom = 81.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "Add folder"
 
 [node name="RemoveFolderButton" type="Button" parent="Tabs/Collections/Sections/CurrentCollection/Buttons"]
-margin_top = 119.0
+margin_top = 85.0
 margin_right = 108.0
-margin_bottom = 234.0
+margin_bottom = 167.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "Remove Folder"
 
-[node name="SaveCollectionButton" type="Button" parent="Tabs/Collections/Sections/CurrentCollection/Buttons"]
-margin_top = 238.0
+[node name="SaveCurrentCollectionButton" type="Button" parent="Tabs/Collections/Sections/CurrentCollection/Buttons"]
+margin_top = 171.0
 margin_right = 108.0
-margin_bottom = 353.0
+margin_bottom = 253.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "Save"
 
 [node name="Label2" type="Label" parent="Tabs/Collections/Sections"]
-margin_top = 375.0
-margin_right = 392.0
-margin_bottom = 406.0
+margin_top = 275.0
+margin_right = 292.0
+margin_bottom = 306.0
 text = "
 All Collections"
 __meta__ = {
@@ -244,33 +244,33 @@ __meta__ = {
 }
 
 [node name="Collections" type="HBoxContainer" parent="Tabs/Collections/Sections"]
-margin_top = 410.0
-margin_right = 392.0
-margin_bottom = 764.0
+margin_top = 310.0
+margin_right = 292.0
+margin_bottom = 564.0
 size_flags_vertical = 3
 
 [node name="CollectionsList" type="ItemList" parent="Tabs/Collections/Sections/Collections"]
-margin_right = 324.0
-margin_bottom = 354.0
+margin_right = 224.0
+margin_bottom = 254.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="Buttons" type="VBoxContainer" parent="Tabs/Collections/Sections/Collections"]
-margin_left = 328.0
-margin_right = 392.0
-margin_bottom = 354.0
+margin_left = 228.0
+margin_right = 292.0
+margin_bottom = 254.0
 
-[node name="Load" type="Button" parent="Tabs/Collections/Sections/Collections/Buttons"]
+[node name="LoadCollectionButton" type="Button" parent="Tabs/Collections/Sections/Collections/Buttons"]
 margin_right = 64.0
-margin_bottom = 175.0
+margin_bottom = 125.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "Load"
 
-[node name="Remove" type="Button" parent="Tabs/Collections/Sections/Collections/Buttons"]
-margin_top = 179.0
+[node name="RemoveCollectionButton" type="Button" parent="Tabs/Collections/Sections/Collections/Buttons"]
+margin_top = 129.0
 margin_right = 64.0
-margin_bottom = 354.0
+margin_bottom = 254.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "Remove"
@@ -284,14 +284,14 @@ margin_top = 32.0
 margin_right = -4.0
 margin_bottom = -4.0
 
-[node name="Items" type="ItemList" parent="Tabs/History"]
+[node name="HistoryItems" type="ItemList" parent="Tabs/History"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="FileDialog" type="FileDialog" parent="."]
+[node name="FolderFindDialog" type="FileDialog" parent="."]
 margin_left = 4.0
 margin_top = 544.0
 margin_right = 360.0
@@ -304,8 +304,19 @@ access = 2
 current_dir = "/Users/pmgru/Documents/Docs/Dev/Projects/Coding/Godot/MediaPicker"
 current_path = "/Users/pmgru/Documents/Docs/Dev/Projects/Coding/Godot/MediaPicker/"
 
-[connection signal="pressed" from="Tabs/Picker/Sections/Current/Path/OpenFolderButton" to="." method="_on_Button_pressed"]
 [connection signal="pressed" from="Tabs/Picker/Sections/Current/Path/OpenFolderButton" to="." method="_on_OpenFolderButton_pressed"]
-[connection signal="item_activated" from="Tabs/Picker/Sections/Search/Result" to="." method="_on_ItemList_item_activated"]
-[connection signal="pressed" from="Tabs/Collections/Sections/CurrentCollection/Buttons/AddFolderButton" to="." method="_on_Button_pressed"]
-[connection signal="dir_selected" from="FileDialog" to="." method="_on_FileDialog_dir_selected"]
+[connection signal="pressed" from="Tabs/Picker/Sections/Current/PlayControls/PlayButton" to="." method="_on_PlayButton_pressed"]
+[connection signal="pressed" from="Tabs/Picker/Sections/Current/PlayControls/AutoPlayCheckBox" to="." method="_on_AutoPlayCheckBox_pressed"]
+[connection signal="pressed" from="Tabs/Picker/Sections/Current/PlayControls2/PrevButton" to="." method="_on_PrevButton_pressed"]
+[connection signal="pressed" from="Tabs/Picker/Sections/Current/PlayControls2/NextButton" to="." method="_on_NextButton_pressed"]
+[connection signal="pressed" from="Tabs/Picker/Sections/Random/HBoxContainer/RandomFromCollectionButton" to="." method="_on_RandomFromCollectionButton_pressed"]
+[connection signal="pressed" from="Tabs/Picker/Sections/Random/HBoxContainer/RandomFromFolder" to="." method="_on_RandomFromFolder_pressed"]
+[connection signal="text_changed" from="Tabs/Picker/Sections/Search/SearchBar" to="." method="_on_SearchBar_text_changed"]
+[connection signal="item_activated" from="Tabs/Picker/Sections/Search/SearchResult" to="." method="_on_SearchResult_item_activated"]
+[connection signal="pressed" from="Tabs/Collections/Sections/CurrentCollection/Buttons/AddFolderButton" to="." method="_on_AddFolderButton_pressed"]
+[connection signal="pressed" from="Tabs/Collections/Sections/CurrentCollection/Buttons/RemoveFolderButton" to="." method="_on_RemoveFolderButton_pressed"]
+[connection signal="pressed" from="Tabs/Collections/Sections/CurrentCollection/Buttons/SaveCurrentCollectionButton" to="." method="_on_SaveCurrentCollectionButton_pressed"]
+[connection signal="pressed" from="Tabs/Collections/Sections/Collections/Buttons/LoadCollectionButton" to="." method="_on_LoadCollectionButton_pressed"]
+[connection signal="pressed" from="Tabs/Collections/Sections/Collections/Buttons/RemoveCollectionButton" to="." method="_on_RemoveCollectionButton_pressed"]
+[connection signal="item_activated" from="Tabs/History/HistoryItems" to="." method="_on_HistoryItems_item_activated"]
+[connection signal="dir_selected" from="FolderFindDialog" to="." method="_on_FolderFindDialog_dir_selected"]
