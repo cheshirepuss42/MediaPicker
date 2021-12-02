@@ -1,15 +1,4 @@
 using Godot;
-using System;
-
-/*
-TODO:
--link the signals from the ui to the app:
-    -signalhandler?
--serialization
-    -settings-model
--search and random functionality
-
-*/
 
 public class Main : Control
 {
@@ -25,15 +14,32 @@ public class Main : Control
         SearchResults = GetNode<ItemList>("Tabs/Picker/Sections/Search/SearchResult");
         SearchTerm = GetNode<LineEdit>("Tabs/Picker/Sections/Search/SearchBar");
         History = GetNode<ItemList>("Tabs/History/HistoryItems");
-        Picker = new MediaPicker();
+        Picker = new MediaPicker();        
+        Picker.UpdateFiles();
+        RefreshUI();
+    }
+    public void RefreshUI()
+    {
+        FoldersList.Clear();
+        foreach(var folder in Picker.Settings.CurrentCollection.Folders)
+        {
+            FoldersList.AddItem(folder);
+        }
+        CollectionsList.Clear();
+        foreach(var collection in Picker.Settings.StoredCollections)
+        {
+            CollectionsList.AddItem(collection.Name);
+        }        
     }
 
     // Picker
     public void _on_RandomFromFolder_pressed()
     {
+        Picker.PlayRandomFromCurrentFolder();
     }
     public void _on_RandomFromCollectionButton_pressed()
     {
+        Picker.PlayRandomFromCollection();
     }
     public void _on_NextButton_pressed()
     {
