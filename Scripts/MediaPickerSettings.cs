@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+
 using System.Linq;
 
 [Serializable]
@@ -13,7 +14,7 @@ public class MediaCollection
             List<string> result = new List<string>();
             foreach (var f in Folders)
             {
-                var lastpart = f.Split('/').LastOrDefault();
+                var lastpart = f.Split(new[] { "\\" }, StringSplitOptions.None).LastOrDefault();
                 result.Add(lastpart);
             }
             return string.Join(", ", result);
@@ -28,6 +29,7 @@ public class MediaPickerSettings
 {
     public List<MediaCollection> StoredCollections;
     public MediaCollection CurrentCollection;
+    public string CurrentPath;
     public string CurrentFileName;
     public string CurrentFolderPath;
     public string CurrentSearchTerm;
@@ -46,9 +48,11 @@ public class MediaPickerSettings
     }
     public void SetCurrentFile(string path)
     {
-        var parts = path.Split('/').ToList();
+
+        CurrentPath = path;
+        var parts = path.Split(new[] { "\\" }, StringSplitOptions.None).ToList();
         CurrentFileName = parts.Last();
         parts.RemoveAt(parts.Count - 1);
-        CurrentFolderPath = string.Join("/", parts);
+        CurrentFolderPath = string.Join("\\", parts);
     }
 }

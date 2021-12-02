@@ -1,6 +1,9 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://Scripts/Main.cs" type="Script" id=1]
+
+[sub_resource type="DynamicFont" id=1]
+size = 25
 
 [node name="Main" type="Control"]
 anchor_right = 1.0
@@ -36,14 +39,14 @@ __meta__ = {
 }
 
 [node name="Current" type="VBoxContainer" parent="Tabs/Picker/Sections"]
-margin_right = 292.0
+margin_right = 442.0
 margin_bottom = 137.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="CurrentCollection" type="Label" parent="Tabs/Picker/Sections/Current"]
-margin_right = 292.0
+margin_right = 442.0
 margin_bottom = 31.0
 text = "Current collection: 
 blaaaaa"
@@ -51,66 +54,69 @@ align = 1
 
 [node name="Path" type="HBoxContainer" parent="Tabs/Picker/Sections/Current"]
 margin_top = 35.0
-margin_right = 292.0
+margin_right = 442.0
 margin_bottom = 59.0
 
 [node name="CurrentPath" type="LineEdit" parent="Tabs/Picker/Sections/Current/Path"]
-margin_right = 241.0
+margin_right = 391.0
 margin_bottom = 24.0
 size_flags_horizontal = 3
+align = 2
 
 [node name="OpenFolderButton" type="Button" parent="Tabs/Picker/Sections/Current/Path"]
-margin_left = 245.0
-margin_right = 292.0
+margin_left = 395.0
+margin_right = 442.0
 margin_bottom = 24.0
 text = "Open"
 
 [node name="PlayControls" type="HBoxContainer" parent="Tabs/Picker/Sections/Current"]
 margin_top = 63.0
-margin_right = 292.0
+margin_right = 442.0
 margin_bottom = 113.0
 
 [node name="PlayButton" type="Button" parent="Tabs/Picker/Sections/Current/PlayControls"]
-margin_right = 264.0
+margin_right = 414.0
 margin_bottom = 50.0
 rect_min_size = Vector2( 0, 50 )
 size_flags_horizontal = 3
-text = "Play"
+custom_fonts/font = SubResource( 1 )
+text = "movie strikes back"
+clip_text = true
 
 [node name="AutoPlayCheckBox" type="CheckBox" parent="Tabs/Picker/Sections/Current/PlayControls"]
-margin_left = 268.0
-margin_right = 292.0
+margin_left = 418.0
+margin_right = 442.0
 margin_bottom = 50.0
 align = 2
 
 [node name="PlayControls2" type="HBoxContainer" parent="Tabs/Picker/Sections/Current"]
 margin_top = 117.0
-margin_right = 292.0
+margin_right = 442.0
 margin_bottom = 137.0
 
 [node name="PrevButton" type="Button" parent="Tabs/Picker/Sections/Current/PlayControls2"]
-margin_right = 144.0
+margin_right = 219.0
 margin_bottom = 20.0
 size_flags_horizontal = 3
 text = "Prev"
 
 [node name="NextButton" type="Button" parent="Tabs/Picker/Sections/Current/PlayControls2"]
-margin_left = 148.0
-margin_right = 292.0
+margin_left = 223.0
+margin_right = 442.0
 margin_bottom = 20.0
 size_flags_horizontal = 3
 text = "Next"
 
 [node name="Random" type="VBoxContainer" parent="Tabs/Picker/Sections"]
 margin_top = 141.0
-margin_right = 292.0
+margin_right = 442.0
 margin_bottom = 226.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Label" type="Label" parent="Tabs/Picker/Sections/Random"]
-margin_right = 292.0
+margin_right = 442.0
 margin_bottom = 31.0
 text = "
 Random"
@@ -118,19 +124,19 @@ align = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Tabs/Picker/Sections/Random"]
 margin_top = 35.0
-margin_right = 292.0
+margin_right = 442.0
 margin_bottom = 85.0
 
 [node name="RandomFromCollectionButton" type="Button" parent="Tabs/Picker/Sections/Random/HBoxContainer"]
-margin_right = 144.0
+margin_right = 219.0
 margin_bottom = 50.0
 rect_min_size = Vector2( 0, 50 )
 size_flags_horizontal = 3
 text = "? from collection"
 
 [node name="RandomFromFolder" type="Button" parent="Tabs/Picker/Sections/Random/HBoxContainer"]
-margin_left = 148.0
-margin_right = 292.0
+margin_left = 223.0
+margin_right = 442.0
 margin_bottom = 50.0
 rect_min_size = Vector2( 0, 50 )
 size_flags_horizontal = 3
@@ -139,7 +145,7 @@ clip_text = true
 
 [node name="Search" type="VBoxContainer" parent="Tabs/Picker/Sections"]
 margin_top = 230.0
-margin_right = 292.0
+margin_right = 442.0
 margin_bottom = 564.0
 size_flags_vertical = 3
 __meta__ = {
@@ -147,7 +153,7 @@ __meta__ = {
 }
 
 [node name="Label" type="Label" parent="Tabs/Picker/Sections/Search"]
-margin_right = 292.0
+margin_right = 442.0
 margin_bottom = 31.0
 text = "
 Search collection"
@@ -155,13 +161,13 @@ align = 1
 
 [node name="SearchBar" type="LineEdit" parent="Tabs/Picker/Sections/Search"]
 margin_top = 35.0
-margin_right = 292.0
+margin_right = 442.0
 margin_bottom = 59.0
 size_flags_horizontal = 3
 
 [node name="SearchResult" type="ItemList" parent="Tabs/Picker/Sections/Search"]
 margin_top = 63.0
-margin_right = 292.0
+margin_right = 442.0
 margin_bottom = 334.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
