@@ -1,9 +1,11 @@
 using Godot;
+using System.Collections.Generic;
+using System.Linq;
 
 public class Main : Control
 {
-    public ItemList FoldersList, CollectionsList, SearchResults, HistoryList;
-    public LineEdit SearchTerm, CurrentPath;
+    public ItemList FoldersList, CollectionsList, SearchResults, HistoryList, RandomHistoryList;
+    public LineEdit SearchTerm, CurrentPath, CollectionName;
     public Button PlayButton;
     public CheckBox AutoPlayCheck;
     public Label CurrentCollectionLabel;
@@ -11,17 +13,21 @@ public class Main : Control
 
     public override void _Ready()
     {
-        CurrentCollectionLabel = GetNode<Label>("Tabs/Picker/Sections/Current/CurrentCollection");
-        SearchResults = GetNode<ItemList>("Tabs/Picker/Sections/Search/SearchResult");
-        SearchTerm = GetNode<LineEdit>("Tabs/Picker/Sections/Search/SearchBar");
-        CurrentPath = GetNode<LineEdit>("Tabs/Picker/Sections/Current/Path/CurrentPath");
-        PlayButton = GetNode<Button>("Tabs/Picker/Sections/Current/PlayControls/PlayButton");
-        AutoPlayCheck = GetNode<CheckBox>("Tabs/Picker/Sections/Current/PlayControls/AutoPlayCheckBox");
+        string picker = "Tabs/Picker/Sections/";
+        CurrentCollectionLabel = GetNode<Label>(picker + "Current/CurrentCollection");
+        SearchResults = GetNode<ItemList>(picker + "Find/Search/SearchResult");
+        RandomHistoryList = GetNode<ItemList>(picker + "Find/Random/RandomHistory");
+        SearchTerm = GetNode<LineEdit>(picker + "Find/Search/SearchBar");
+        CurrentPath = GetNode<LineEdit>(picker + "Current/Path/CurrentPath");
+        PlayButton = GetNode<Button>(picker + "Current/PlayControls/PlayButton");
+        AutoPlayCheck = GetNode<CheckBox>(picker + "Current/PlayControls/AutoPlayCheckBox");
 
-        FoldersList = GetNode<ItemList>("Tabs/Collections/Sections/CurrentCollection/FoldersList");
-        CollectionsList = GetNode<ItemList>("Tabs/Collections/Sections/Collections/CollectionsList");  
-              
-        HistoryList = GetNode<ItemList>("Tabs/History/HistoryItems");        
+        string collections = "Tabs/Collections/Sections/";
+        FoldersList = GetNode<ItemList>(collections + "CurrentCollection/FoldersList");
+        CollectionsList = GetNode<ItemList>(collections + "Collections/CollectionsList");
+        CollectionName = GetNode<LineEdit>(collections + "CollectionName");
+
+        HistoryList = GetNode<ItemList>("Tabs/History/HistoryItems");
         Picker = new MediaPicker();
         Picker.UpdateFiles();
         RefreshUI();
@@ -37,15 +43,21 @@ public class Main : Control
         foreach (var collection in Picker.Settings.StoredCollections)
         {
             CollectionsList.AddItem(collection.Name);
-        }
+        }        
         CurrentCollectionLabel.Text = Picker.Settings.CurrentCollection.Name;
+        CollectionName.Text = Picker.Settings.CurrentCollection.Name;
         CurrentPath.Text = Picker.Settings.CurrentPath;
         PlayButton.Text = Picker.Settings.CurrentFileName;
         HistoryList.Clear();
         foreach (var file in Picker.History)
         {
             HistoryList.AddItem(file);
-        }        
+        }
+        RandomHistoryList.Clear();
+        foreach (var file in Picker.History)
+        {
+            RandomHistoryList.AddItem(file);
+        }
     }
 
     // Picker
@@ -61,9 +73,13 @@ public class Main : Control
     }
     public void _on_NextButton_pressed()
     {
+        Picker.SetNextFile();
+        RefreshUI();
     }
     public void _on_PrevButton_pressed()
     {
+        Picker.SetPrevFile();
+        RefreshUI();
     }
     public void _on_AutoPlayCheckBox_pressed()
     {
@@ -91,7 +107,7 @@ public class Main : Control
     }
     public void _on_OpenFolderButton_pressed()
     {
-
+        Picker.OpenCurrentFolder();
     }
 
     // Collections
@@ -104,6 +120,8 @@ public class Main : Control
     {
         Picker.AddToFoldersList(dir);
         FoldersList.AddItem(dir);
+        Picker.UpdateFiles();
+        RefreshUI();        
     }
     public void _on_RemoveFolderButton_pressed()
     {
@@ -112,17 +130,49 @@ public class Main : Control
             Picker.RemoveFromFoldersList(FoldersList.GetItemText(selected));
             FoldersList.RemoveItem(selected);
         }
+        Picker.UpdateFiles();
+        RefreshUI();
+    }
+    public List<string> ItemsFromList(ItemList list)
+    {
+        var nl = new List<string>();
+        for (int i = 0; i < list.Items.Count; i++)
+        {
+            nl.Add(list.GetItemText(i));
+        }
+        return nl;
     }
     public void _on_SaveCurrentCollectionButton_pressed()
     {
+        Picker.SaveCollection(CollectionName.Text, ItemsFromList(FoldersList));
+        RefreshUI();
     }
     public void _on_LoadCollectionButton_pressed()
     {
+        var name = CollectionsList.GetItemText(CollectionsList.GetSelectedItems()[0]);
+        var cl = Picker.Settings.StoredCollections.Find(x => x.Name == name);
+        if (cl != null)
+        {
+            Picker.Settings.CurrentCollection = cl;
+        }
+        Picker.UpdateFiles();
+        RefreshUI();
+
     }
     public void _on_RemoveCollectionButton_pressed()
     {
+        var name = CollectionsList.GetItemText(CollectionsList.GetSelectedItems()[0]);
+        var cl = Picker.Settings.StoredCollections.Find(x => x.Name == name);
+        if (cl != null)
+        {
+            Picker.Settings.StoredCollections.Remove(cl);
+        }
+        RefreshUI();        
     }
-
+    public void _on_RandomHistory_item_activated(int index)
+    {
+        Picker.PlayFile(RandomHistoryList.GetItemText(index), true);
+    }
     // History
     public void _on_HistoryItems_item_activated(int index)
     {

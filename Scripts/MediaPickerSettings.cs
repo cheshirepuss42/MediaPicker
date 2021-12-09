@@ -7,19 +7,19 @@ using System.Linq;
 public class MediaCollection
 {
     public List<string> Folders = new List<string>();
-    public string Name
-    {
-        get
-        {
-            List<string> result = new List<string>();
-            foreach (var f in Folders)
-            {
-                var lastpart = f.Split(new[] { "\\" }, StringSplitOptions.None).LastOrDefault();
-                result.Add(lastpart);
-            }
-            return string.Join(", ", result);
-        }
-    }
+    public string Name;
+    // {
+    //     get
+    //     {
+    //         List<string> result = new List<string>();
+    //         foreach (var f in Folders)
+    //         {
+    //             var lastpart = f.Split(new[] { "\\" }, StringSplitOptions.None).LastOrDefault();
+    //             result.Add(lastpart);
+    //         }
+    //         return string.Join(", ", result);
+    //     }
+    // }
 
 }
 
@@ -37,8 +37,8 @@ public class MediaPickerSettings
     public MediaPickerSettings()
     {
         StoredCollections = new List<MediaCollection>();
-        StoredCollections.Add(new MediaCollection() { Folders = new List<string>() { "Z:\\Video\\Movies" } });
-        CurrentCollection = StoredCollections.First();
+        //StoredCollections.Add(new MediaCollection() { Folders = new List<string>() { "Z:\\Video\\Movies" } });
+        CurrentCollection = new MediaCollection();
     }
 
 
@@ -48,7 +48,6 @@ public class MediaPickerSettings
     }
     public void SetCurrentFile(string path)
     {
-
         CurrentPath = path;
         var parts = path.Split(new[] { "\\" }, StringSplitOptions.None).ToList();
         CurrentFileName = parts.Last();

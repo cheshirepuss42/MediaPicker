@@ -8,8 +8,12 @@ public static class ListExtensions
 {
     public static T RandomItem<T>(this IList<T> list)
     {
-        var index = GD.Randi() % list.Count;
-        return list[((int)index)];
+        if (list.Count > 0)
+        {
+            var index = GD.Randi() % list.Count;
+            return list[((int)index)];
+        }
+        return default(T);
     }
 }
 
@@ -36,17 +40,38 @@ public class MediaPicker
             Items.AddRange(Files.GetFiles(folder));
         }
     }
-
+    public void OpenCurrentFolder()
+    {
+        if(!string.IsNullOrEmpty(Settings.CurrentFolderPath))
+        {
+            Process.Start(Settings.CurrentFolderPath);
+        }        
+    }
+    public void SetNextFile()
+    {
+        int index = Items.IndexOf(Settings.CurrentPath);
+        index = index + 1 < Items.Count ? index + 1 : 0;
+        PlayFile(Items.ElementAtOrDefault(index));
+    }
+    public void SetPrevFile()
+    {
+        int index = Items.IndexOf(Settings.CurrentPath);
+        index = index - 1 >= 0 ? index - 1 : Items.Count - 1;
+        PlayFile(Items.ElementAtOrDefault(index));
+    }
     public void PlayFile(string path, bool autoplayOverride = false)
     {
-        Settings.SetCurrentFile(path);
-        if (Settings.AutoPlay || autoplayOverride)
+        if (Items.Count > 0 && path != null)
         {
-            Process.Start(path);
-        }            
-        if (!History.Contains(path))
-        {
-            History.Add(path);
+            Settings.SetCurrentFile(path);
+            if (Settings.AutoPlay || autoplayOverride)
+            {
+                Process.Start(path);
+            }
+            if (!History.Contains(path))
+            {
+                History.Add(path);
+            }
         }
     }
 
@@ -80,7 +105,24 @@ public class MediaPicker
     }
     public void PlayCurrentFile()
     {
+
         PlayFile(Settings.CurrentPath, true);
     }
-
+    public void SaveCollection(string name, List<string> folders)
+    {
+        var same = Settings.StoredCollections.Find(x => x.Name == name);
+        if (same != null)
+        {
+            same.Folders = folders;
+        }
+        else
+        {
+            var mc = new MediaCollection();
+            mc.Name = name;
+            mc.Folders = folders;
+            Settings.StoredCollections.Add(mc);
+        }
+    }
 }
+
+

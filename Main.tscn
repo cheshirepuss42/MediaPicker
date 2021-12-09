@@ -1,9 +1,6 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=2 format=2]
 
 [ext_resource path="res://Scripts/Main.cs" type="Script" id=1]
-
-[sub_resource type="DynamicFont" id=1]
-size = 25
 
 [node name="Main" type="Control"]
 anchor_right = 1.0
@@ -22,6 +19,7 @@ __meta__ = {
 }
 
 [node name="Picker" type="Tabs" parent="Tabs"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -79,7 +77,6 @@ margin_right = 414.0
 margin_bottom = 50.0
 rect_min_size = Vector2( 0, 50 )
 size_flags_horizontal = 3
-custom_fonts/font = SubResource( 1 )
 text = "movie strikes back"
 clip_text = true
 
@@ -107,73 +104,85 @@ margin_bottom = 20.0
 size_flags_horizontal = 3
 text = "Next"
 
-[node name="Random" type="VBoxContainer" parent="Tabs/Picker/Sections"]
+[node name="Find" type="TabContainer" parent="Tabs/Picker/Sections"]
 margin_top = 141.0
 margin_right = 442.0
-margin_bottom = 226.0
+margin_bottom = 564.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Random" type="VBoxContainer" parent="Tabs/Picker/Sections/Find"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label" type="Label" parent="Tabs/Picker/Sections/Random"]
-margin_right = 442.0
-margin_bottom = 31.0
-text = "
-Random"
-align = 1
+[node name="HBoxContainer" type="HBoxContainer" parent="Tabs/Picker/Sections/Find/Random"]
+margin_right = 434.0
+margin_bottom = 50.0
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Tabs/Picker/Sections/Random"]
-margin_top = 35.0
-margin_right = 442.0
-margin_bottom = 85.0
-
-[node name="RandomFromCollectionButton" type="Button" parent="Tabs/Picker/Sections/Random/HBoxContainer"]
-margin_right = 219.0
+[node name="RandomFromCollectionButton" type="Button" parent="Tabs/Picker/Sections/Find/Random/HBoxContainer"]
+margin_right = 215.0
 margin_bottom = 50.0
 rect_min_size = Vector2( 0, 50 )
 size_flags_horizontal = 3
 text = "? from collection"
 
-[node name="RandomFromFolder" type="Button" parent="Tabs/Picker/Sections/Random/HBoxContainer"]
-margin_left = 223.0
-margin_right = 442.0
+[node name="RandomFromFolder" type="Button" parent="Tabs/Picker/Sections/Find/Random/HBoxContainer"]
+margin_left = 219.0
+margin_right = 434.0
 margin_bottom = 50.0
 rect_min_size = Vector2( 0, 50 )
 size_flags_horizontal = 3
 text = "? from current folder"
 clip_text = true
 
-[node name="Search" type="VBoxContainer" parent="Tabs/Picker/Sections"]
-margin_top = 230.0
-margin_right = 442.0
-margin_bottom = 564.0
+[node name="RandomHistory" type="ItemList" parent="Tabs/Picker/Sections/Find/Random"]
+margin_top = 54.0
+margin_right = 434.0
+margin_bottom = 387.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Search" type="VBoxContainer" parent="Tabs/Picker/Sections/Find"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
 size_flags_vertical = 3
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label" type="Label" parent="Tabs/Picker/Sections/Search"]
-margin_right = 442.0
+[node name="Label" type="Label" parent="Tabs/Picker/Sections/Find/Search"]
+margin_right = 434.0
 margin_bottom = 31.0
 text = "
 Search collection"
 align = 1
 
-[node name="SearchBar" type="LineEdit" parent="Tabs/Picker/Sections/Search"]
+[node name="SearchBar" type="LineEdit" parent="Tabs/Picker/Sections/Find/Search"]
 margin_top = 35.0
-margin_right = 442.0
+margin_right = 434.0
 margin_bottom = 59.0
 size_flags_horizontal = 3
 
-[node name="SearchResult" type="ItemList" parent="Tabs/Picker/Sections/Search"]
+[node name="SearchResult" type="ItemList" parent="Tabs/Picker/Sections/Find/Search"]
 margin_top = 63.0
-margin_right = 442.0
-margin_bottom = 334.0
+margin_right = 434.0
+margin_bottom = 387.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="Collections" type="Tabs" parent="Tabs"]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -192,57 +201,63 @@ __meta__ = {
 }
 
 [node name="Label" type="Label" parent="Tabs/Collections/Sections"]
-margin_right = 292.0
+margin_right = 442.0
 margin_bottom = 14.0
 text = "Current Collection"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="CurrentCollection" type="HBoxContainer" parent="Tabs/Collections/Sections"]
+[node name="CollectionName" type="LineEdit" parent="Tabs/Collections/Sections"]
 margin_top = 18.0
-margin_right = 292.0
-margin_bottom = 271.0
+margin_right = 442.0
+margin_bottom = 42.0
+text = "Empty"
+
+[node name="CurrentCollection" type="HBoxContainer" parent="Tabs/Collections/Sections"]
+margin_top = 46.0
+margin_right = 442.0
+margin_bottom = 285.0
 size_flags_vertical = 3
 
 [node name="FoldersList" type="ItemList" parent="Tabs/Collections/Sections/CurrentCollection"]
-margin_right = 180.0
-margin_bottom = 253.0
+margin_right = 330.0
+margin_bottom = 239.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="Buttons" type="VBoxContainer" parent="Tabs/Collections/Sections/CurrentCollection"]
-margin_left = 184.0
-margin_right = 292.0
-margin_bottom = 253.0
+margin_left = 334.0
+margin_right = 442.0
+margin_bottom = 239.0
 
 [node name="AddFolderButton" type="Button" parent="Tabs/Collections/Sections/CurrentCollection/Buttons"]
 margin_right = 108.0
-margin_bottom = 81.0
+margin_bottom = 77.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "Add folder"
 
 [node name="RemoveFolderButton" type="Button" parent="Tabs/Collections/Sections/CurrentCollection/Buttons"]
-margin_top = 85.0
+margin_top = 81.0
 margin_right = 108.0
-margin_bottom = 167.0
+margin_bottom = 158.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "Remove Folder"
 
 [node name="SaveCurrentCollectionButton" type="Button" parent="Tabs/Collections/Sections/CurrentCollection/Buttons"]
-margin_top = 171.0
+margin_top = 162.0
 margin_right = 108.0
-margin_bottom = 253.0
+margin_bottom = 239.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "Save"
 
 [node name="Label2" type="Label" parent="Tabs/Collections/Sections"]
-margin_top = 275.0
-margin_right = 292.0
-margin_bottom = 306.0
+margin_top = 289.0
+margin_right = 442.0
+margin_bottom = 320.0
 text = "
 All Collections"
 __meta__ = {
@@ -250,33 +265,33 @@ __meta__ = {
 }
 
 [node name="Collections" type="HBoxContainer" parent="Tabs/Collections/Sections"]
-margin_top = 310.0
-margin_right = 292.0
+margin_top = 324.0
+margin_right = 442.0
 margin_bottom = 564.0
 size_flags_vertical = 3
 
 [node name="CollectionsList" type="ItemList" parent="Tabs/Collections/Sections/Collections"]
-margin_right = 224.0
-margin_bottom = 254.0
+margin_right = 374.0
+margin_bottom = 240.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="Buttons" type="VBoxContainer" parent="Tabs/Collections/Sections/Collections"]
-margin_left = 228.0
-margin_right = 292.0
-margin_bottom = 254.0
+margin_left = 378.0
+margin_right = 442.0
+margin_bottom = 240.0
 
 [node name="LoadCollectionButton" type="Button" parent="Tabs/Collections/Sections/Collections/Buttons"]
 margin_right = 64.0
-margin_bottom = 125.0
+margin_bottom = 118.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "Load"
 
 [node name="RemoveCollectionButton" type="Button" parent="Tabs/Collections/Sections/Collections/Buttons"]
-margin_top = 129.0
+margin_top = 122.0
 margin_right = 64.0
-margin_bottom = 254.0
+margin_bottom = 240.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "Remove"
@@ -315,10 +330,11 @@ current_path = "/Users/pmgru/Documents/Docs/Dev/Projects/Coding/Godot/MediaPicke
 [connection signal="pressed" from="Tabs/Picker/Sections/Current/PlayControls/AutoPlayCheckBox" to="." method="_on_AutoPlayCheckBox_pressed"]
 [connection signal="pressed" from="Tabs/Picker/Sections/Current/PlayControls2/PrevButton" to="." method="_on_PrevButton_pressed"]
 [connection signal="pressed" from="Tabs/Picker/Sections/Current/PlayControls2/NextButton" to="." method="_on_NextButton_pressed"]
-[connection signal="pressed" from="Tabs/Picker/Sections/Random/HBoxContainer/RandomFromCollectionButton" to="." method="_on_RandomFromCollectionButton_pressed"]
-[connection signal="pressed" from="Tabs/Picker/Sections/Random/HBoxContainer/RandomFromFolder" to="." method="_on_RandomFromFolder_pressed"]
-[connection signal="text_changed" from="Tabs/Picker/Sections/Search/SearchBar" to="." method="_on_SearchBar_text_changed"]
-[connection signal="item_activated" from="Tabs/Picker/Sections/Search/SearchResult" to="." method="_on_SearchResult_item_activated"]
+[connection signal="pressed" from="Tabs/Picker/Sections/Find/Random/HBoxContainer/RandomFromCollectionButton" to="." method="_on_RandomFromCollectionButton_pressed"]
+[connection signal="pressed" from="Tabs/Picker/Sections/Find/Random/HBoxContainer/RandomFromFolder" to="." method="_on_RandomFromFolder_pressed"]
+[connection signal="item_activated" from="Tabs/Picker/Sections/Find/Random/RandomHistory" to="." method="_on_RandomHistory_item_activated"]
+[connection signal="text_changed" from="Tabs/Picker/Sections/Find/Search/SearchBar" to="." method="_on_SearchBar_text_changed"]
+[connection signal="item_activated" from="Tabs/Picker/Sections/Find/Search/SearchResult" to="." method="_on_SearchResult_item_activated"]
 [connection signal="pressed" from="Tabs/Collections/Sections/CurrentCollection/Buttons/AddFolderButton" to="." method="_on_AddFolderButton_pressed"]
 [connection signal="pressed" from="Tabs/Collections/Sections/CurrentCollection/Buttons/RemoveFolderButton" to="." method="_on_RemoveFolderButton_pressed"]
 [connection signal="pressed" from="Tabs/Collections/Sections/CurrentCollection/Buttons/SaveCurrentCollectionButton" to="." method="_on_SaveCurrentCollectionButton_pressed"]
